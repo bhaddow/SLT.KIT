@@ -32,7 +32,7 @@ RUN cd /opt && wget https://www-i6.informatik.rwth-aachen.de/web/Software/mwerSe
 
 # Speaker Diarization
 RUN cd /opt && \
-    wget http://lium3.univ-lemans.fr/diarization/lib/exe/fetch.php/lium_spkdiarization-8.4.1.jar.gz && \
+    wget --no-check-certificate https://git-lium.univ-lemans.fr/Meignier/lium-spkdiarization/raw/master/jar/lium_spkdiarization-8.4.1.jar.gz && \
     gunzip lium_spkdiarization-8.4.1.jar.gz
 
 # Anaconda
@@ -60,7 +60,7 @@ RUN cd /opt && \
 RUN cd /opt && \
     git clone https://github.com/SeanNaren/warp-ctc/
 RUN mkdir /opt/warp-ctc/build && cd /opt/warp-ctc/build && cmake .. && make
-RUN export CUDA_HOME="/usr/local/cuda" && cd /opt/warp-ctc/pytorch_binding && /root/anaconda3/bin/python setup.py install
+RUN export CUDA_HOME="/usr/local/cuda" && cd /opt/warp-ctc/pytorch_binding && grep CUDA_HOME /root/anaconda3/lib/python3.6/site-packages/torch/utils/cpp_extension.py  && /root/anaconda3/bin/python -c 'import torch; print (torch.cuda.is_available())'  && /root/anaconda3/bin/python setup.py install
 
 # ASR Scoring NIST Scoring Toolkit
 RUN cd /opt && wget http://www.openslr.org/resources/4/sctk-2.4.10-20151007-1312Z.tar.bz2 && tar jxf sctk-2.4.10-20151007-1312Z.tar.bz2 && rm sctk-2.4.10-20151007-1312Z.tar.bz2
