@@ -58,7 +58,7 @@ RUN cd /opt && \
     git clone https://github.com/markus-m-u-e-l-l-e-r/CTC.ISL && cd CTC.ISL && /root/anaconda3/bin/pip install -r requirements.txt
 ## warp-ctc and pytorch binding
 RUN cd /opt && \
-    git clone https://github.com/SeanNaren/warp-ctc/
+    git clone --branch 0.4.1 https://github.com/SeanNaren/warp-ctc.git
 RUN mkdir /opt/warp-ctc/build && cd /opt/warp-ctc/build && cmake .. && make
 RUN export CUDA_HOME="/usr/local/cuda" && cd /opt/warp-ctc/pytorch_binding && grep CUDA_HOME /root/anaconda3/lib/python3.6/site-packages/torch/utils/cpp_extension.py  && /root/anaconda3/bin/python -c 'import torch; print (torch.cuda.is_available())'  && /root/anaconda3/bin/python setup.py install
 
